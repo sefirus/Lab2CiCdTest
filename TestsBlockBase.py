@@ -105,6 +105,21 @@ class TestBlock(unittest.TestCase):
         self.block.process_collision(self.ball)
         self.assertEqual(self.ball.direction_y, 1)
         self.assertEqual(self.ball.direction_x, 1)
+
+    def test_corner_top_left_bounce(self):
+        #                     \
+        #                      ^
+        # this kind of bounce   \
+        #                        v_____
+        #                        |
+        self.block.top = 500
+        self.block.left = 500
+        self.ball.direction_x = 1
+        self.ball.direction_y = 1
+        self.block.process_collision(self.ball)
+        self.assertEqual(self.ball.direction_y, -1)
+        self.assertEqual(self.ball.direction_x, -1)
+
     pass
 
 
