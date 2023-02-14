@@ -4,8 +4,28 @@ from BlockBase import BlockBase
 
 
 class Block(BlockBase):
-
-    def __init__(self, poz_x: int, poz_y: int, rows: int, cols: int):
+    """
+    Class, representing one of the blocks at the top
+    Attributes
+    ----------
+    width: float
+        width of the block
+    height: float
+        height of the bloch
+    color: tuple[int, int, int]
+        color of the block
+    """
+    def __init__(self, poz_x: int, poz_y: int, cols: int):
+        """
+        Parameters
+        ----------
+        poz_x: int
+            x position of the block in the grid
+        poz_y: int
+            y position of the block in the grid
+        cols: int
+            number of columns in the grid
+        """
         block_height = 50
         block_width = (Game.SCREEN_WIDTH - cols * 20) / cols
         super().__init__(10 + (block_width + 20) * poz_x, 10 + (block_height + 20) * poz_y, block_width, block_height)

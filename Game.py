@@ -9,8 +9,9 @@ FPS = 120
 
 
 class Game:
-
+    """Class, encapsulating game flow"""
     def adjust_difficulty(self):
+        """Procedure, setting game parameters in order to provided difficulty"""
         if int(self.args.difficulty) == 1:
             self.args.paddle_width = 330
             self.diff = 0.2
@@ -22,6 +23,13 @@ class Game:
             self.diff = 0.7
 
     def __init__(self, args):
+        """
+        Constructor
+        Parameters
+        ----------
+        args:
+            cli args
+        """
         self.args = args
         self.adjust_difficulty()
         # paddle settings
@@ -36,9 +44,12 @@ class Game:
         # blocks settings
         block_rows = int(self.args.block_rows)
         block_columns = int(self.args.block_columns)
-        self.block_list = [Block(i, j, block_rows, block_columns) for i in range(block_columns) for j in range(block_rows)]
+        self.block_list = [Block(i, j, block_columns) for i in range(block_columns) for j in range(block_rows)]
 
     def process_bounds_collisions(self):
+        """
+        Procedure, responsible for handling ball collisions with screen bounds
+        """
         if self.ball.centerx < self.ball.radius - self.ball.speed \
                 or self.ball.centerx > SCREEN_WIDTH - self.ball.radius + self.ball.speed:
             self.ball.direction_x = -self.ball.direction_x
@@ -46,6 +57,9 @@ class Game:
             self.ball.direction_y = -self.ball.direction_y
 
     def process_blocks_collisions(self):
+        """
+        Procedure, responsible for handling ball collisions with paddle and array of blocks
+        """
         if self.ball.colliderect(self.paddle) and self.ball.direction_y > 0:
             self.paddle.process_collision(self.ball)
 
@@ -57,6 +71,9 @@ class Game:
             self.paddle.speed += 3 * self.diff
 
     def run(self):
+        """
+        Main loop of the game
+        """
         pygame.init()
         sc = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         clock = pygame.time.Clock()
