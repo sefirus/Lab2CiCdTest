@@ -7,8 +7,9 @@ parser.add_argument('-ph', '--paddle-height', default=35, help='customize paddle
 parser.add_argument('-ps', '--paddle-speed', default=7, help='customize default paddle speed')
 parser.add_argument('-dr', '--ball-radius', default=20, help='customize ball radius')
 parser.add_argument('-bs', '--ball-speed', default=3, help='customize default ball speed')
+parser.add_argument('-br', '--block-rows', default=4, help='customize count of block rows')
+parser.add_argument('-bc', '--block-columns', default=7, help='customize count of block columns')
 parser.add_argument('-d', '--difficulty', default=1, choices=['3', '2', '1'], help='set difficulty level; from 1 to 3')
 
 args = parser.parse_args()
-
 Game(args).run()

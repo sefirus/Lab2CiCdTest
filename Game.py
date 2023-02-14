@@ -4,10 +4,11 @@ from Ball import Ball
 from Block import Block
 from Paddle import Paddle
 
+SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
+FPS = 120
+
 
 class Game:
-    SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
-    FPS = 120
 
     def adjust_difficulty(self):
         if int(self.args.difficulty) == 1:
@@ -27,17 +28,19 @@ class Game:
         paddle_w = int(self.args.paddle_width)
         paddle_h = int(self.args.paddle_height)
         self.paddle_speed = float(self.args.paddle_speed)
-        self.paddle = Paddle(paddle_w, paddle_h, self.paddle_speed, Game.SCREEN_HEIGHT, Game.SCREEN_WIDTH)
+        self.paddle = Paddle(paddle_w, paddle_h, self.paddle_speed, SCREEN_HEIGHT, SCREEN_WIDTH)
         # ball settings
         ball_radius = int(self.args.ball_radius)
         ball_speed = int(self.args.ball_speed)
-        self.ball = Ball(ball_radius, ball_speed, Game.SCREEN_HEIGHT, Game.SCREEN_WIDTH)
+        self.ball = Ball(ball_radius, ball_speed, SCREEN_HEIGHT, SCREEN_WIDTH)
         # blocks settings
-        self.block_list = [Block(i, j) for i in range(7) for j in range(4)]
+        block_rows = int(self.args.block_rows)
+        block_columns = int(self.args.block_columns)
+        self.block_list = [Block(i, j, block_rows, block_columns) for i in range(block_columns) for j in range(block_rows)]
 
     def process_bounds_collisions(self):
         if self.ball.centerx < self.ball.radius - self.ball.speed \
-                or self.ball.centerx > Game.SCREEN_WIDTH - self.ball.radius + self.ball.speed:
+                or self.ball.centerx > SCREEN_WIDTH - self.ball.radius + self.ball.speed:
             self.ball.direction_x = -self.ball.direction_x
         if self.ball.centery < self.ball.radius - self.ball.speed:
             self.ball.direction_y = -self.ball.direction_y
@@ -55,7 +58,7 @@ class Game:
 
     def run(self):
         pygame.init()
-        sc = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))
+        sc = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         clock = pygame.time.Clock()
 
         while True:
@@ -75,7 +78,7 @@ class Game:
             # collision with blocks
             self.process_blocks_collisions()
             # win, game over
-            if self.ball.bottom > Game.SCREEN_HEIGHT:
+            if self.ball.bottom > SCREEN_HEIGHT:
                 print('Game over!')
                 exit()
             elif not len(self.block_list):
@@ -85,10 +88,10 @@ class Game:
             key = pygame.key.get_pressed()
             if key[pygame.K_LEFT] and self.paddle.left > 0:
                 self.paddle.left -= self.paddle_speed
-            if key[pygame.K_RIGHT] and self.paddle.right < Game.SCREEN_WIDTH:
+            if key[pygame.K_RIGHT] and self.paddle.right < SCREEN_WIDTH:
                 self.paddle.right += self.paddle_speed
             # update screen
             pygame.display.flip()
-            clock.tick(Game.FPS)
+            clock.tick(FPS)
 
     pass
