@@ -3,11 +3,24 @@ import Ball
 
 
 class BlockBase(pygame.Rect):
-
+    """
+    Base class for both blocks array and paddle
+    Methods
+    -------
+    process_collision:
+        method, responsible for changing direction of the ball on collision with the block
+    """
     def __init__(self, left, top, width, height):
         super().__init__(left, top, width, height)
 
     def process_collision(self, ball: Ball):
+        """
+        Procedure, responsible for changing direction of the ball on collision with the block
+        Parameters
+        ----------
+        ball: Ball
+            Ball, to process collision with
+        """
         if not ball.colliderect(self):
             return
 
