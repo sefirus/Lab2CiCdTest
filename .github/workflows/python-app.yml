@@ -37,7 +37,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --html=report_localhost.html/
-         --cov=my_package tests/
+         --cov=main.py tests/
         coverage html -d coverage_report/
     - name: Upload pytest test results
       uses: actions/upload-artifact@v3
