@@ -36,27 +36,21 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --html=report_localhost.html --cov=com --cov-report=html
+        pytest --html=report_localhost.html/
+         --cov=my_package tests/
+        coverage html -d coverage_report/
     - name: Upload pytest test results
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: report.sarif
-    - name: Convert SARIF to HTML
-      run: npx sarif-web-component report.sarif -o report.html
-    - name: Upload pytest test results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: pytest-results
-        path: report.html
-
-
-#     - name: Upload pytest test results
-#       uses: actions/upload-artifact@v3
-#       with:
-#         name: pytest-results
-#         path: report_localhost.html
-#         retain-on-upload: false
-#         artifact-content-type: text/html
+        path: report_localhost.html
+        retain-on-upload: false
+        artifact-content-type: text/html
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage_report/
 
 
 
