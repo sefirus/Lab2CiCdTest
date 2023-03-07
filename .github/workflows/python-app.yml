@@ -38,7 +38,7 @@ jobs:
       run: |
         pytest --html=report_localhost.html --cov=com --cov-report=html
     - name: Upload pytest test results
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: report.sarif
     - name: Convert SARIF to HTML
