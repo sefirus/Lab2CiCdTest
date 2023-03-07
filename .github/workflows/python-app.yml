@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: lint-report 
-        path: lint-report.html
+        path: lint-report/
     - name: Test with pytest
       run: |
         pytest --html=tests_report.html \
