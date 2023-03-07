@@ -36,14 +36,14 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --html=report_localhost.html/
+        pytest --html=tests_report.html \
          --cov=main.py tests/
         coverage html -d coverage_report/
     - name: Upload pytest test results
       uses: actions/upload-artifact@v3
       with:
         name: pytest-results
-        path: report_localhost.html
+        path: tests_report.html
         retain-on-upload: false
         artifact-content-type: text/html
     - name: Upload coverage report
